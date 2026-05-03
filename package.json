@@ -1,0 +1,38 @@
+{
+  "name": "opencode-autoskills",
+  "version": "1.0.0",
+  "description": "OpenCode plugin + setup CLI for autoskills (midudev)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "opencode-autoskills": "bin/setup.mjs"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "keywords": [
+    "opencode",
+    "plugin",
+    "autoskills",
+    "skills"
+  ],
+  "license": "CC-BY-NC-4.0"
+}
