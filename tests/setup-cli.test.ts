@@ -44,32 +44,32 @@ describe("setup CLI", () => {
   it("creates global command file by default", async () => {
     await setup();
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/home/user/.config/opencode/commands"),
+      path.join("/home/user/.config/opencode/command"),
       { recursive: true }
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
-      path.join("/home/user/.config/opencode/commands/autoskills.md"),
+      path.join("/home/user/.config/opencode/command/autoskills.md"),
       expect.stringContaining("autoskills"),
       "utf-8"
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Created: ${path.join("/home/user/.config/opencode/commands/autoskills.md")}`
+      `Created: ${path.join("/home/user/.config/opencode/command/autoskills.md")}`
     );
   });
 
   it("creates local command file with --local", async () => {
     await setup({ local: true });
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/commands"),
+      path.join("/projects/my-app/.opencode/command"),
       { recursive: true }
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/commands/autoskills.md"),
+      path.join("/projects/my-app/.opencode/command/autoskills.md"),
       expect.stringContaining("autoskills"),
       "utf-8"
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Created: ${path.join("/projects/my-app/.opencode/commands/autoskills.md")}`
+      `Created: ${path.join("/projects/my-app/.opencode/command/autoskills.md")}`
     );
   });
 
@@ -82,7 +82,10 @@ describe("setup CLI", () => {
   });
 
   it("skips when file exists with identical content", async () => {
-    const expectedContent = `When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
+    const expectedContent = `---
+description: Detect and install AI skills for this project
+---
+When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
     vi.mocked(fs.existsSync).mockImplementation((p) => {
       return typeof p === "string" && p.endsWith("autoskills.md");
     });
@@ -200,7 +203,7 @@ describe("main CLI", () => {
     expect(fs.writeFileSync).not.toHaveBeenCalled();
   });
 
-  it("shows usage and exits with code 1 for unknown subcommands", async () => {
+  it("shows usage and exits with code 1 for unknown subcommand", async () => {
     process.argv = ["node", "cli.js", "help"];
     await main();
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -214,7 +217,7 @@ describe("main CLI", () => {
     process.argv = ["node", "cli.js", "setup", "--local"];
     await main();
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/commands"),
+      path.join("/projects/my-app/.opencode/command"),
       { recursive: true }
     );
     expect(process.exitCode).toBeUndefined();

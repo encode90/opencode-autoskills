@@ -3,13 +3,16 @@ import * as os from "node:os";
 import * as path from "node:path";
 import { checkNodeVersion } from "./version.js";
 
-const COMMAND_FILE_CONTENT = `When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
+const COMMAND_FILE_CONTENT = `---
+description: Detect and install AI skills for this project
+---
+When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
 
 export function resolveTargetPath(local: boolean, filename = "autoskills.md"): { base: string; target: string } {
   const home = os.homedir();
   const base = local
-    ? path.resolve(process.cwd(), ".opencode", "commands")
-    : path.resolve(home, ".config", "opencode", "commands");
+    ? path.resolve(process.cwd(), ".opencode", "command")
+    : path.resolve(home, ".config", "opencode", "command");
 
   const target = path.resolve(base, filename);
 
