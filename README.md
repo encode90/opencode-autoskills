@@ -42,6 +42,7 @@ npx opencode-autoskills setup
 ```
 
 This registers the `/autoskills` command globally (`~/.config/opencode/commands/`).
+It also adds `opencode-autoskills` to your global OpenCode `plugin` array (`~/.config/opencode/opencode.json`) so the custom tool is available.
 
 For per-project setup:
 
@@ -82,6 +83,7 @@ install skills for this project
 - **No `postinstall` scripts** — setup is always explicit, never automatic
 - **No runtime dependencies** — only `@opencode-ai/plugin` as a peer dependency
 - **No file system writes outside intended paths** — path traversal prevention in setup CLI
+- **Explicit OpenCode registration** — setup writes the command file and adds the plugin to `opencode.json`
 - **autoskills' own security model** applies to all skill downloads (SHA-256 verification, curated registry)
 
 ---

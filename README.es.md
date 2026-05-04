@@ -2,7 +2,7 @@
 
 > **Plugin de OpenCode que integra [autoskills](https://github.com/midudev/autoskills) en tu flujo de trabajo con IA.**
 
-Un solo setup. Escribís `/autoskills`. Tu agente de IA instala las mejores skills para tu stack.
+Una sola configuración. Escribe `/autoskills`. Tu agente de IA instala las mejores skills para tu stack.
 
 ---
 
@@ -42,6 +42,7 @@ npx opencode-autoskills setup
 ```
 
 Esto registra el comando `/autoskills` de forma global (`~/.config/opencode/commands/`).
+También agrega `opencode-autoskills` al arreglo global de plugins de OpenCode (`~/.config/opencode/opencode.json`) para que la herramienta personalizada esté disponible.
 
 Para instalación por proyecto:
 
@@ -82,6 +83,7 @@ instalame skills para este proyecto
 - **Sin scripts `postinstall`** — el setup siempre es explícito, nunca automático
 - **Cero dependencias en runtime** — solo `@opencode-ai/plugin` como peer dependency
 - **Sin escrituras fuera de los paths esperados** — prevención de path traversal en el CLI de setup
+- **Registro explícito en OpenCode** — setup escribe el archivo de comando y agrega el plugin a `opencode.json`
 - **El modelo de seguridad de autoskills** aplica a todas las descargas de skills (verificación SHA-256, registry curado)
 
 ---
