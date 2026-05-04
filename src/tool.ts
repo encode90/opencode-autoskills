@@ -4,6 +4,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { checkNodeVersion } from "./version.js";
 const SKILLS_DIR = path.join(".agents", "skills");
+const OPENCODE_AGENT_TARGET = "universal";
 
 function normalizeSkillName(value: string) {
   return value.trim().toLowerCase();
@@ -85,7 +86,8 @@ async function removeUnselectedSkills(cwd: string, keep: string[]) {
 export const autoskillsTool = tool({
   description:
     "Execute autoskills for real. Use action 'detect' to run a dry-run and show suggested skills, " +
-    "then use action 'install' with the exact keep list selected by the user.",
+    "then use action 'install' with the exact keep list selected by the user. " +
+    "The tool installs only the OpenCode-compatible target.",
   args: {
     action: tool.schema.string().describe("Action to perform: detect or install"),
     keep: tool.schema.string().array().optional().describe(
@@ -104,7 +106,7 @@ export const autoskillsTool = tool({
     const action = normalizeSkillName(args.action || "detect");
 
     if (action === "detect") {
-      const result = await runAutoskills(cwd, ["--dry-run"]);
+      const result = await runAutoskills(cwd, ["--dry-run", "-a", OPENCODE_AGENT_TARGET]);
       const installed = await listInstalledSkills(cwd);
 
       return [
@@ -112,6 +114,7 @@ export const autoskillsTool = tool({
         installed.length > 0
           ? `Currently installed skills: ${installed.join(", ")}`
           : "Currently installed skills: none",
+        `Agent target: ${OPENCODE_AGENT_TARGET}`,
         result.stdout ? `Dry-run output:\n${result.stdout}` : "Dry-run output: (empty)",
         result.stderr ? `stderr:\n${result.stderr}` : "",
         "Ask the user which skills to keep, then call this tool again with action 'install' and the keep list.",
@@ -119,13 +122,14 @@ export const autoskillsTool = tool({
     }
 
     if (action === "install") {
-      const result = await runAutoskills(cwd, ["-y"]);
+      const result = await runAutoskills(cwd, ["-y", "-a", OPENCODE_AGENT_TARGET]);
       const keep = (args.keep ?? []).map((entry) => entry.trim()).filter(Boolean);
       const removed = await removeUnselectedSkills(cwd, keep);
       const remaining = await listInstalledSkills(cwd);
 
       return [
         `autoskills install completed in: ${cwd}`,
+        `Agent target: ${OPENCODE_AGENT_TARGET}`,
         result.stdout ? `Install output:\n${result.stdout}` : "Install output: (empty)",
         result.stderr ? `stderr:\n${result.stderr}` : "",
         keep.length > 0

@@ -41,11 +41,12 @@ describe("autoskillsTool", () => {
     const result = await autoskillsTool.execute({ action: "detect" }, context);
 
     expect(exec).toHaveBeenCalledWith(
-      "npx autoskills --dry-run",
+      "npx autoskills --dry-run -a universal",
       expect.objectContaining({ cwd: "/projects/demo" }),
       expect.any(Function)
     );
     expect(result).toContain("Detected skills");
+    expect(result).toContain("Agent target: universal");
     expect(result).not.toContain("Error");
   });
 
@@ -67,7 +68,7 @@ describe("autoskillsTool", () => {
     const result = await autoskillsTool.execute({ action: "install", keep: ["react"] }, context);
 
     expect(exec).toHaveBeenCalledWith(
-      "npx autoskills -y",
+      "npx autoskills -y -a universal",
       expect.objectContaining({ cwd: "/projects/demo" }),
       expect.any(Function)
     );
@@ -75,6 +76,7 @@ describe("autoskillsTool", () => {
       expect.stringContaining(".agents"),
       { recursive: true, force: true }
     );
+    expect(result).toContain("Agent target: universal");
     expect(result).toContain("Remaining installed skills: react");
   });
 
