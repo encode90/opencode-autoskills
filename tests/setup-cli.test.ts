@@ -85,9 +85,17 @@ describe("setup CLI", () => {
     const expectedContent = `---
 description: Detect and install AI skills for this project
 ---
-Run \`npx autoskills\` in the current project directory using the bash tool.
+Follow this exact two-phase flow:
 
-Do not inspect project files yourself. Do not parse or summarize project files. Let autoskills handle technology detection, interactive skill selection, and installation. After it finishes, briefly tell the user that installed skills are available from \`.agents/skills/\`, which OpenCode discovers automatically.`;
+**Phase 1 — Detect and ask**
+1. Run \`npx autoskills --dry-run\` via bash in the current project directory.
+2. Show the user the detected technologies and the full list of suggested skills.
+3. Ask the user which skills they want to install. Wait for their explicit selection. Do NOT proceed without confirmation.
+
+**Phase 2 — Install and filter**
+4. Run \`npx autoskills -y\` via bash. This installs ALL detected skills into \`.agents/skills/\`.
+5. List the directories inside \`.agents/skills/\`. Remove (delete) the directories for any skills the user explicitly chose NOT to install.
+6. Briefly confirm which skills remain installed and remind the user that OpenCode discovers them automatically from \`.agents/skills/\`.`;
     vi.mocked(fs.existsSync).mockImplementation((p) => {
       return typeof p === "string" && p.endsWith("autoskills.md");
     });
