@@ -1,18 +1,21 @@
 # opencode-autoskills
 
-> **Plugin de OpenCode que integra [autoskills](https://github.com/midudev/autoskills) en tu flujo de trabajo con IA.**
+> **Plugin de OpenCode creado por encode90 para ahorrarte tiempo al detectar, elegir e instalar skills de IA desde un solo comando.**
 
-Una sola configuración. Escribe `/autoskills`. Tu agente de IA instala las mejores skills para tu stack.
+Una sola configuración. Escribís `/autoskills`. Elegís con lenguaje natural. Seguís trabajando sin perder tiempo.
 
 ---
 
-## ⚡ Funciona gracias a autoskills
+## ⚡ Por qué existe este proyecto
 
-**Este proyecto es un wrapper fino de [midudev/autoskills](https://github.com/midudev/autoskills)** — el motor que escanea tu proyecto, detecta tecnologías e instala skills curadas para agentes de IA.
+`opencode-autoskills` convierte una tarea repetitiva de setup en un flujo rápido dentro de OpenCode:
 
-No mantenemos un catálogo de skills. No escribimos lógica de detección. **autoskills hace todo el trabajo pesado.** Nosotros solo lo hacemos descubrible y sin fricción dentro de OpenCode.
+- detecta el stack
+- muestra las skills sugeridas
+- te deja elegir qué conservar
+- instala todo en `.agents/skills/`
 
-> 💙 Muchísimas gracias a [**midudev**](https://midu.dev) por crear y mantener [autoskills](https://autoskills.sh). Este proyecto no existiría sin él.
+El resultado: **menos configuración manual, menos cambios de contexto y más velocidad para arrancar el proyecto actual.**
 
 ---
 
@@ -20,22 +23,36 @@ No mantenemos un catálogo de skills. No escribimos lógica de detección. **aut
 
 ```
 /autoskills
-  → La IA de OpenCode lee el comando
-  → Invoca la herramienta autoskills
-  → La herramienta responde: "ejecutá npx autoskills"
-  → La IA usa bash → se abre la TUI de autoskills
-  → Elegís las skills interactivamente
+  → OpenCode invoca la herramienta autoskills
+  → La herramienta ejecuta una detección real en modo dry-run
+  → Elegís qué querés conservar
+  → Podés responder con lenguaje natural o con números
+  → La herramienta instala y filtra el resultado final
   → Se instalan en .agents/skills/
   → OpenCode las descubre automáticamente
 ```
 
-**Cero tokens del agente consumidos durante la detección, selección o instalación.** La IA solo maneja la invocación inicial (~200 tokens).
+Ejemplos de respuestas válidas después de la detección:
+
+```text
+instalá 1, 3, 4
+```
+
+```text
+dejá vitest, typescript-advanced-types y accessibility
+```
+
+```text
+todas menos la 2
+```
 
 ---
 
 ## 🚀 Instalación
 
-### 1. Setup (una sola vez)
+## Camino rápido
+
+### 1. Setup una vez
 
 ```bash
 npx opencode-autoskills setup
@@ -60,20 +77,31 @@ Abrí OpenCode en cualquier proyecto y escribí:
 
 O simplemente decile a la IA:
 
-```
+```text
 instalame skills para este proyecto
+```
+
+Cuando aparezca la lista, podés responder de cualquiera de estas formas:
+
+```text
+dejá 1, 3, 4, 6
+```
+
+```text
+dejá vitest, accessibility y seo
 ```
 
 ---
 
 ## 📦 Distribución
 
+- **Landing page**: https://encode90.github.io/opencode-autoskills/
 - **npm**: `opencode-autoskills`
 - **GitHub**: este repo
 
 ### Requisitos
 
-- Node.js >= 22.6.0 (requerido por autoskills)
+- Node.js >= 22.6.0
 - OpenCode con la dependencia peer `@opencode-ai/plugin`
 
 ---
@@ -83,8 +111,8 @@ instalame skills para este proyecto
 - **Sin scripts `postinstall`** — el setup siempre es explícito, nunca automático
 - **Cero dependencias en runtime** — solo `@opencode-ai/plugin` como peer dependency
 - **Sin escrituras fuera de los paths esperados** — prevención de path traversal en el CLI de setup
-- **Registro explícito en OpenCode** — setup escribe el archivo de comando y agrega el plugin a `opencode.json`
-- **El modelo de seguridad de autoskills** aplica a todas las descargas de skills (verificación SHA-256, registry curado)
+- **Registro explícito en OpenCode** — setup escribe el archivo de comando y agrega el plugin a `opencode.json`, o crea un wrapper local para modo proyecto
+- **Ejecución real** — la herramienta personalizada hace la detección e instalación en lugar de devolver solo instrucciones
 
 ---
 
@@ -108,15 +136,9 @@ opencode-autoskills/
 
 ---
 
-## 🙏 Agradecimientos
+## 🙏 Crédito
 
-Este proyecto está construido sobre [**midudev/autoskills**](https://github.com/midudev/autoskills). Toda la detección de tecnologías, el mapeo de skills, la gestión del registry y la lógica de instalación viene de autoskills. Nosotros solo aportamos la capa de integración con OpenCode.
-
-Si te sirve este proyecto, considerá:
-
-- ⭐ Darle estrella a [autoskills en GitHub](https://github.com/midudev/autoskills)
-- 💙 [Sponsorear a midudev](https://github.com/sponsors/midudev)
-- ⭐ ¡Darle estrella a este repo también!
+Este proyecto integra [autoskills](https://github.com/midudev/autoskills) dentro de OpenCode. El proyecto upstream aporta el motor de detección e instalación; `opencode-autoskills` se enfoca en el flujo de OpenCode, el setup local por proyecto y la selección pensada para ahorrar tiempo.
 
 ---
 

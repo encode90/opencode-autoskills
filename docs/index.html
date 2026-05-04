@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-en="OpenCode AutoSkills — Zero-token AI skill installer for OpenCode" data-es="OpenCode AutoSkills — Instalador de skills de IA sin consumo de tokens para OpenCode">OpenCode AutoSkills — Zero-token AI skill installer for OpenCode</title>
-  <meta name="description" data-en="A thin, zero-overhead wrapper around midudev's autoskills that brings curated AI agent skills into OpenCode with zero agent token consumption." data-es="Un wrapper ligero de autoskills (midudev) que integra skills de IA curadas en OpenCode sin consumo de tokens del agente." content="A thin, zero-overhead wrapper around midudev's autoskills that brings curated AI agent skills into OpenCode with zero agent token consumption.">
+  <title data-en="OpenCode AutoSkills — Faster skill setup for OpenCode projects" data-es="OpenCode AutoSkills — Setup más rápido de skills para proyectos OpenCode">OpenCode AutoSkills — Faster skill setup for OpenCode projects</title>
+  <meta name="description" data-en="Save setup time in OpenCode projects with guided skill detection, natural-language selection, and one-command installation." data-es="Ahorrá tiempo de setup en proyectos OpenCode con detección guiada de skills, selección por lenguaje natural e instalación desde un solo comando." content="Save setup time in OpenCode projects with guided skill detection, natural-language selection, and one-command installation.">
   <meta property="og:title" data-en="OpenCode AutoSkills" data-es="OpenCode AutoSkills" content="OpenCode AutoSkills">
-  <meta property="og:description" data-en="One setup. Type /autoskills. Your AI agent installs the best skills for your stack." data-es="Una sola configuración. Escribe /autoskills. Tu agente de IA instala las mejores skills para tu stack." content="One setup. Type /autoskills. Your AI agent installs the best skills for your stack.">
+  <meta property="og:description" data-en="One setup. Type /autoskills. Choose skills by name or list number and save time on every project." data-es="Una sola configuración. Escribí /autoskills. Elegí skills por nombre o número de lista y ahorrá tiempo en cada proyecto." content="One setup. Type /autoskills. Choose skills by name or list number and save time on every project.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" data-en="OpenCode AutoSkills" data-es="OpenCode AutoSkills" content="OpenCode AutoSkills">
-  <meta name="twitter:description" data-en="One setup. Type /autoskills. Your AI agent installs the best skills for your stack." data-es="Una sola configuración. Escribe /autoskills. Tu agente de IA instala las mejores skills para tu stack." content="One setup. Type /autoskills. Your AI agent installs the best skills for your stack.">
+  <meta name="twitter:description" data-en="One setup. Type /autoskills. Choose skills by name or list number and save time on every project." data-es="Una sola configuración. Escribí /autoskills. Elegí skills por nombre o número de lista y ahorrá tiempo en cada proyecto." content="One setup. Type /autoskills. Choose skills by name or list number and save time on every project.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -243,36 +243,36 @@
 
 <section class="hero">
   <div class="container">
-    <div class="badge">v1.0.0 · OpenCode Plugin</div>
-    <h1 data-en="One setup.<br><span class=&quot;cyan&quot;>Zero tokens.</span><br>Best skills installed." data-es="Una configuración.<br><span class=&quot;cyan&quot;>Cero tokens.</span><br>Las mejores skills instaladas.">One setup.<br><span class="cyan">Zero tokens.</span><br>Best skills installed.</h1>
-    <p class="sub" data-en="A thin wrapper around <a href='https://github.com/midudev/autoskills' target='_blank'>midudev's autoskills</a> that brings curated AI agent skills into OpenCode with zero agent token consumption during detection and installation." data-es="Un wrapper ligero de <a href='https://github.com/midudev/autoskills' target='_blank'>autoskills (midudev)</a> que integra skills de IA curadas en OpenCode sin consumo de tokens del agente durante la detección e instalación.">A thin wrapper around <a href="https://github.com/midudev/autoskills" target="_blank">midudev's autoskills</a> that brings curated AI agent skills into OpenCode with zero agent token consumption during detection and installation.</p>
+    <div class="badge">v1.0.3 · OpenCode Plugin</div>
+    <h1 data-en="One setup.<br><span class=&quot;cyan&quot;>Less friction.</span><br>Skills ready faster." data-es="Una configuración.<br><span class=&quot;cyan&quot;>Menos fricción.</span><br>Skills listas más rápido.">One setup.<br><span class="cyan">Less friction.</span><br>Skills ready faster.</h1>
+    <p class="sub" data-en="An OpenCode workflow by encode90 that detects suggested skills, lets you choose them in natural language, and installs only what your current project needs." data-es="Un flujo para OpenCode creado por encode90 que detecta skills sugeridas, te deja elegirlas con lenguaje natural e instala solo lo que necesita tu proyecto actual.">An OpenCode workflow by encode90 that detects suggested skills, lets you choose them in natural language, and installs only what your current project needs.</p>
     <div class="cmd-wrap">
       <div class="cmd"><span class="dollar">$</span>npx opencode-autoskills setup</div>
       <button class="copy" onclick="copyCmd()" data-en="Copy" data-es="Copiar">Copy</button>
     </div>
-    <div class="author-badge" data-en="Developed by <a href='https://github.com/encode90' target='_blank'>encode90</a>" data-es="Desarrollado por <a href='https://github.com/encode90' target='_blank'>encode90</a>">Developed by <a href="https://github.com/encode90" target="_blank">encode90</a></div>
+    <div class="author-badge" data-en="Built by <a href='https://github.com/encode90' target='_blank'>encode90</a> for faster OpenCode project setup" data-es="Creado por <a href='https://github.com/encode90' target='_blank'>encode90</a> para acelerar el setup de proyectos OpenCode">Built by <a href="https://github.com/encode90" target="_blank">encode90</a> for faster OpenCode project setup</div>
   </div>
 </section>
 
 <section id="architecture">
   <div class="container">
     <h2><span class="num">01</span><span data-en="System Architecture" data-es="Arquitectura del Sistema">System Architecture</span></h2>
-    <p class="desc" data-en="We don't maintain a skill catalog or detection logic. autoskills does all the heavy lifting — we only provide the OpenCode integration layer." data-es="No mantenemos un catálogo de skills ni lógica de detección. autoskills hace todo el trabajo pesado — nosotros solo proporcionamos la capa de integración con OpenCode.">We don't maintain a skill catalog or detection logic. autoskills does all the heavy lifting — we only provide the OpenCode integration layer.</p>
+    <p class="desc" data-en="The goal is simple: reduce setup time for the current OpenCode project without forcing you through manual installs and repeated prompts." data-es="La meta es simple: reducir el tiempo de setup del proyecto actual en OpenCode sin obligarte a hacer instalaciones manuales ni repetir prompts.">The goal is simple: reduce setup time for the current OpenCode project without forcing you through manual installs and repeated prompts.</p>
     <div class="arch-grid">
       <div class="arch-card">
         <span class="icon">⚡</span>
-        <h3 data-en="Powered by autoskills" data-es="Impulsado por autoskills">Powered by autoskills</h3>
-        <p data-en="All technology detection, skill mapping, registry management, and installation comes from <a href='https://github.com/midudev/autoskills' target='_blank'>midudev/autoskills</a>. SHA-256 verified, curated registry." data-es="Toda la detección de tecnologías, el mapeo de skills, la gestión del registro y la instalación proviene de <a href='https://github.com/midudev/autoskills' target='_blank'>midudev/autoskills</a>. Registro curado con verificación SHA-256.">All technology detection, skill mapping, registry management, and installation comes from <a href="https://github.com/midudev/autoskills" target="_blank">midudev/autoskills</a>. SHA-256 verified, curated registry.</p>
+         <h3 data-en="Project-Focused Workflow" data-es="Flujo Enfocado en el Proyecto">Project-Focused Workflow</h3>
+         <p data-en="Run one command, review the detected stack, and keep only the skills that make sense for the current repo." data-es="Ejecutá un solo comando, revisá el stack detectado y conservá solo las skills que tengan sentido para el repo actual.">Run one command, review the detected stack, and keep only the skills that make sense for the current repo.</p>
       </div>
       <div class="arch-card">
         <span class="icon">🪡</span>
-        <h3 data-en="Thin Wrapper" data-es="Wrapper Ligero">Thin Wrapper</h3>
-        <p data-en="Under 300 lines of TypeScript. A custom OpenCode tool + setup CLI. No duplicate logic. No maintenance burden." data-es="Menos de 300 líneas de TypeScript. Una herramienta personalizada de OpenCode + CLI de configuración. Sin lógica duplicada. Sin carga de mantenimiento.">Under 300 lines of TypeScript. A custom OpenCode tool + setup CLI. No duplicate logic. No maintenance burden.</p>
+         <h3 data-en="Natural-Language Selection" data-es="Selección con Lenguaje Natural">Natural-Language Selection</h3>
+         <p data-en="Choose by directory name or by list number. You can answer things like “keep 1, 3, 4” or “all except 2”." data-es="Elegí por nombre de directorio o por número de lista. Podés responder cosas como “dejá 1, 3, 4” o “todas menos la 2”.">Choose by directory name or by list number. You can answer things like “keep 1, 3, 4” or “all except 2”.</p>
       </div>
       <div class="arch-card">
         <span class="icon">🪙</span>
-        <h3 data-en="Zero Token Cost" data-es="Costo Cero en Tokens">Zero Token Cost</h3>
-        <p data-en="Detection, selection, and installation run outside the agent. Only the initial invocation costs tokens (~200). The rest is direct terminal interaction." data-es="La detección, selección e instalación se ejecutan fuera del agente. Solo la invocación inicial consume tokens (~200). El resto es interacción directa en la terminal.">Detection, selection, and installation run outside the agent. Only the initial invocation costs tokens (~200). The rest is direct terminal interaction.</p>
+         <h3 data-en="Time Savings" data-es="Ahorro de Tiempo">Time Savings</h3>
+         <p data-en="Detection and installation happen in one guided flow so you spend less time searching, copying commands, and cleaning unwanted skills later." data-es="La detección y la instalación ocurren en un flujo guiado para que pierdas menos tiempo buscando, copiando comandos y limpiando skills no deseadas después.">Detection and installation happen in one guided flow so you spend less time searching, copying commands, and cleaning unwanted skills later.</p>
       </div>
     </div>
   </div>
@@ -285,36 +285,36 @@
       <div class="feature">
         <div class="dot"></div>
         <div>
-          <h3 data-en="AI-Powered Execution" data-es="Ejecución Impulsada por IA">AI-Powered Execution</h3>
-          <p data-en="Your OpenCode agent invokes the autoskills tool. The heavy lifting runs natively, not through the LLM." data-es="Tu agente de OpenCode invoca la herramienta autoskills. El trabajo pesado se ejecuta de forma nativa, no a través del LLM.">Your OpenCode agent invokes the autoskills tool. The heavy lifting runs natively, not through the LLM.</p>
+          <h3 data-en="Real Tool Execution" data-es="Ejecución Real de la Herramienta">Real Tool Execution</h3>
+          <p data-en="The custom OpenCode tool runs detection and installation for real instead of returning a prompt-only suggestion." data-es="La herramienta personalizada de OpenCode ejecuta la detección y la instalación de verdad en lugar de devolver solo una sugerencia en texto.">The custom OpenCode tool runs detection and installation for real instead of returning a prompt-only suggestion.</p>
         </div>
       </div>
       <div class="feature">
         <div class="dot"></div>
         <div>
-          <h3 data-en="Near-Zero Latency" data-es="Latencia Casi Nula">Near-Zero Latency</h3>
-          <p data-en="No extra network requests. Skills are downloaded and verified by autoskills' own pipeline." data-es="Sin solicitudes de red adicionales. Las skills se descargan y verifican mediante el pipeline propio de autoskills.">No extra network requests. Skills are downloaded and verified by autoskills' own pipeline.</p>
+          <h3 data-en="Less Context Switching" data-es="Menos Cambios de Contexto">Less Context Switching</h3>
+          <p data-en="Stay inside OpenCode: detect, review, choose, and install without leaving the current workflow." data-es="Quedate dentro de OpenCode: detectá, revisá, elegí e instalá sin salir del flujo actual.">Stay inside OpenCode: detect, review, choose, and install without leaving the current workflow.</p>
         </div>
       </div>
       <div class="feature">
         <div class="dot"></div>
         <div>
-          <h3 data-en="Interactive Selection" data-es="Selección Interactiva">Interactive Selection</h3>
-          <p data-en="Use autoskills' TUI to pick exactly which skills you want — not all-or-nothing like headless installers." data-es="Usa la TUI de autoskills para elegir exactamente qué skills quieres — no todo o nada como los instaladores sin interfaz.">Use autoskills' TUI to pick exactly which skills you want — not all-or-nothing like headless installers.</p>
+          <h3 data-en="Flexible Selection" data-es="Selección Flexible">Flexible Selection</h3>
+          <p data-en="Reply with natural language or with list numbers. The flow supports exact names and phrases like “all except 2”." data-es="Respondé con lenguaje natural o con números de la lista. El flujo soporta nombres exactos y frases como “todas menos la 2”.">Reply with natural language or with list numbers. The flow supports exact names and phrases like “all except 2”.</p>
         </div>
       </div>
       <div class="feature">
         <div class="dot"></div>
         <div>
           <h3 data-en="Global or Per-Project" data-es="Global o Por Proyecto">Global or Per-Project</h3>
-          <p data-en="Setup once globally with <code>--global</code>, or keep it scoped with <code>--local</code>." data-es="Configúralo una vez de forma global con <code>--global</code>, o mantenlo limitado a un proyecto con <code>--local</code>.">Setup once globally with <code>--global</code>, or keep it scoped with <code>--local</code>.</p>
+          <p data-en="Setup once globally, or keep it scoped with <code>--local</code> for a single repository." data-es="Configuración global una sola vez, o limitada con <code>--local</code> para un único repositorio.">Setup once globally, or keep it scoped with <code>--local</code> for a single repository.</p>
         </div>
       </div>
       <div class="feature">
         <div class="dot"></div>
         <div>
           <h3 data-en="Security First" data-es="Seguridad Primero">Security First</h3>
-          <p data-en="No postinstall scripts. No runtime dependencies beyond <code>@opencode-ai/plugin</code> (peer). Path traversal prevention in setup." data-es="Sin scripts postinstall. Sin dependencias en tiempo de ejecución más allá de <code>@opencode-ai/plugin</code> (peer). Prevención de path traversal en la configuración.">No postinstall scripts. No runtime dependencies beyond <code>@opencode-ai/plugin</code> (peer). Path traversal prevention in setup.</p>
+          <p data-en="No postinstall scripts. Minimal runtime surface. Path traversal prevention in setup." data-es="Sin scripts postinstall. Superficie mínima en runtime. Prevención de path traversal en la configuración.">No postinstall scripts. Minimal runtime surface. Path traversal prevention in setup.</p>
         </div>
       </div>
       <div class="feature">
@@ -331,7 +331,7 @@
 <section id="install">
   <div class="container">
     <h2><span class="num">03</span><span data-en="Installation &amp; Usage" data-es="Instalación y Uso">Installation &amp; Usage</span></h2>
-    <p class="desc" data-en="One-time setup. Then <code>/autoskills</code> in any project." data-es="Configuración única. Luego <code>/autoskills</code> en cualquier proyecto.">One-time setup. Then <code>/autoskills</code> in any project.</p>
+    <p class="desc" data-en="One-time setup. Then use <code>/autoskills</code> and answer with names or list numbers." data-es="Configuración única. Luego usá <code>/autoskills</code> y respondé con nombres o números de lista.">One-time setup. Then use <code>/autoskills</code> and answer with names or list numbers.</p>
 
     <div class="code-block">
       <div class="lang" data-en="Terminal — Setup (global, one time)" data-es="Terminal — Configuración (global, una sola vez)">Terminal — Setup (global, one time)</div>
@@ -347,17 +347,21 @@
       <div class="lang" data-en="OpenCode TUI — After setup" data-es="OpenCode TUI — Después de la configuración">OpenCode TUI — After setup</div>
       <pre><span class="s">/</span>autoskills
 
-<span class="c" data-en="# Or just tell the agent:" data-es="# O simplemente dile al agente:"># Or just tell the agent:</span>
-<span class="s">></span> <span data-en="install skills for this project" data-es="instalar skills para este proyecto">install skills for this project</span></pre>
+<span class="c" data-en="# Or just tell the agent:" data-es="# O simplemente decile al agente:"># Or just tell the agent:</span>
+<span class="s">></span> <span data-en="install skills for this project" data-es="instalá skills para este proyecto">install skills for this project</span>
+
+<span class="c" data-en="# After detection, answer like:" data-es="# Después de la detección, respondé por ejemplo:"># After detection, answer like:</span>
+<span class="s">></span> <span data-en="keep 1, 3, 4" data-es="dejá 1, 3, 4">keep 1, 3, 4</span>
+<span class="s">></span> <span data-en="keep vitest, accessibility" data-es="dejá vitest, accessibility">keep vitest, accessibility</span>
+<span class="s">></span> <span data-en="all except 2" data-es="todas menos la 2">all except 2</span></pre>
     </div>
 
     <div class="code-block">
       <div class="lang" data-en="What happens next" data-es="Qué sucede después">What happens next</div>
-      <pre><span class="c" data-en="→ OpenCode AI reads the command" data-es="→ La IA de OpenCode lee el comando">→ OpenCode AI reads the command</span>
-<span class="c" data-en="→ Invokes the autoskills tool" data-es="→ Invoca la herramienta autoskills">→ Invokes the autoskills tool</span>
-<span class="c" data-en="→ Tool responds: &quot;run npx autoskills&quot;" data-es="→ La herramienta responde: &quot;ejecuta npx autoskills&quot;">→ Tool responds: "run npx autoskills"</span>
-<span class="c" data-en="→ AI uses bash → autoskills TUI opens" data-es="→ La IA usa bash → se abre la TUI de autoskills">→ AI uses bash → autoskills TUI opens</span>
-<span class="c" data-en="→ You pick skills interactively" data-es="→ Eliges las skills de forma interactiva">→ You pick skills interactively</span>
+      <pre><span class="c" data-en="→ OpenCode invokes the autoskills tool" data-es="→ OpenCode invoca la herramienta autoskills">→ OpenCode invokes the autoskills tool</span>
+<span class="c" data-en="→ The tool runs real dry-run detection" data-es="→ La herramienta ejecuta una detección real en dry-run">→ The tool runs real dry-run detection</span>
+<span class="c" data-en="→ You answer with names or numbers" data-es="→ Respondés con nombres o números">→ You answer with names or numbers</span>
+<span class="c" data-en="→ The tool installs and filters the final set" data-es="→ La herramienta instala y filtra el conjunto final">→ The tool installs and filters the final set</span>
 <span class="c" data-en="→ Installed to .agents/skills/" data-es="→ Instaladas en .agents/skills/">→ Installed to .agents/skills/</span>
 <span class="c" data-en="→ OpenCode discovers them automatically" data-es="→ OpenCode las descubre automáticamente">→ OpenCode discovers them automatically</span></pre>
     </div>
@@ -375,23 +379,23 @@
       <tbody>
         <tr>
           <td>Node.js</td>
-          <td data-en="Required &gt;= 22.6.0 (enforced by autoskills)" data-es="Requerido &gt;= 22.6.0 (aplicado por autoskills)">Required >= 22.6.0 (enforced by autoskills)</td>
+          <td data-en="Required &gt;= 22.6.0" data-es="Requerido &gt;= 22.6.0">Required >= 22.6.0</td>
         </tr>
         <tr>
           <td>@opencode-ai/plugin</td>
           <td data-en="Peer dependency &gt;= 1.0.0 (provided by OpenCode)" data-es="Dependencia peer &gt;= 1.0.0 (proporcionada por OpenCode)">Peer dependency >= 1.0.0 (provided by OpenCode)</td>
         </tr>
         <tr>
-          <td>--global</td>
-          <td data-en="Setup flag (default). Installs to <code>~/.config/opencode/commands/</code>" data-es="Flag de configuración (por defecto). Instala en <code>~/.config/opencode/commands/</code>">Setup flag (default). Installs to <code>~/.config/opencode/commands/</code></td>
+          <td>global</td>
+          <td data-en="Default setup mode. Writes the command file globally and registers the npm plugin in OpenCode config." data-es="Modo de setup por defecto. Escribe el archivo de comando globalmente y registra el plugin npm en la config de OpenCode.">Default setup mode. Writes the command file globally and registers the npm plugin in OpenCode config.</td>
         </tr>
         <tr>
           <td>--local</td>
-          <td data-en="Setup flag. Installs to <code>.opencode/commands/</code> in current project" data-es="Flag de configuración. Instala en <code>.opencode/commands/</code> en el proyecto actual">Setup flag. Installs to <code>.opencode/commands/</code> in current project</td>
+          <td data-en="Setup flag. Creates <code>.opencode/commands/</code> and a local plugin wrapper for the current project" data-es="Flag de configuración. Crea <code>.opencode/commands/</code> y un wrapper local del plugin para el proyecto actual">Setup flag. Creates <code>.opencode/commands/</code> and a local plugin wrapper for the current project</td>
         </tr>
         <tr>
           <td>opencode.json</td>
-          <td data-en="Setup adds <code>opencode-autoskills</code> to the OpenCode <code>plugin</code> array so the custom tool is available" data-es="La configuración agrega <code>opencode-autoskills</code> al arreglo <code>plugin</code> de OpenCode para que la herramienta personalizada esté disponible">Setup adds <code>opencode-autoskills</code> to the OpenCode <code>plugin</code> array so the custom tool is available</td>
+          <td data-en="Global setup adds <code>opencode-autoskills</code> to the OpenCode <code>plugin</code> array so the custom tool is available" data-es="El setup global agrega <code>opencode-autoskills</code> al arreglo <code>plugin</code> de OpenCode para que la herramienta personalizada esté disponible">Global setup adds <code>opencode-autoskills</code> to the OpenCode <code>plugin</code> array so the custom tool is available</td>
         </tr>
         <tr>
           <td>.agents/skills/</td>
@@ -410,10 +414,10 @@
   <div class="container">
     <div class="links">
       <a href="https://github.com/encode90/opencode-autoskills" target="_blank">GitHub</a>
-      <a href="https://github.com/midudev/autoskills" target="_blank" data-en="Powered by autoskills" data-es="Impulsado por autoskills">Powered by autoskills</a>
+      <a href="https://github.com/midudev/autoskills" target="_blank" data-en="autoskills engine" data-es="motor autoskills">autoskills engine</a>
       <a href="https://www.npmjs.com/package/opencode-autoskills" target="_blank">npm</a>
     </div>
-    <p data-en="Built with <span class='heart'>♥</span> on top of <a href='https://github.com/midudev/autoskills' target='_blank'>midudev/autoskills</a>. Licensed under <a href='https://github.com/encode90/opencode-autoskills/blob/main/LICENSE' target='_blank'>CC BY-NC 4.0</a>." data-es="Construido con <span class='heart'>♥</span> sobre <a href='https://github.com/midudev/autoskills' target='_blank'>midudev/autoskills</a>. Licenciado bajo <a href='https://github.com/encode90/opencode-autoskills/blob/main/LICENSE' target='_blank'>CC BY-NC 4.0</a>.">Built with <span class="heart">♥</span> on top of <a href="https://github.com/midudev/autoskills" target="_blank">midudev/autoskills</a>. Licensed under <a href="https://github.com/encode90/opencode-autoskills/blob/main/LICENSE" target="_blank">CC BY-NC 4.0</a>.</p>
+    <p data-en="Built with <span class='heart'>♥</span> by encode90 using <a href='https://github.com/midudev/autoskills' target='_blank'>autoskills</a> as the detection and installation engine. Licensed under <a href='https://github.com/encode90/opencode-autoskills/blob/main/LICENSE' target='_blank'>CC BY-NC 4.0</a>." data-es="Creado con <span class='heart'>♥</span> por encode90 usando <a href='https://github.com/midudev/autoskills' target='_blank'>autoskills</a> como motor de detección e instalación. Licenciado bajo <a href='https://github.com/encode90/opencode-autoskills/blob/main/LICENSE' target='_blank'>CC BY-NC 4.0</a>.">Built with <span class="heart">♥</span> by encode90 using <a href="https://github.com/midudev/autoskills" target="_blank">autoskills</a> as the detection and installation engine. Licensed under <a href="https://github.com/encode90/opencode-autoskills/blob/main/LICENSE" target="_blank">CC BY-NC 4.0</a>.</p>
   </div>
 </footer>
 
