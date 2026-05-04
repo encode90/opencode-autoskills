@@ -1,6 +1,6 @@
 {
   "name": "opencode-autoskills",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenCode plugin + setup CLI for autoskills (midudev)",
   "type": "module",
   "main": "dist/index.js",
@@ -21,6 +21,7 @@
     "@opencode-ai/plugin": ">=1.0.0"
   },
   "devDependencies": {
+    "@opencode-ai/plugin": "^1.14.33",
     "@types/node": "^22.0.0",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"

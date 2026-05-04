@@ -1,7 +1,12 @@
-import { plugin } from "@opencode-ai/plugin";
+import type { Plugin } from "@opencode-ai/plugin";
 import { autoskillsTool } from "./tool.js";
 
-export default plugin({
-  name: "opencode-autoskills",
-  tools: [autoskillsTool],
-});
+export const OpencodeAutoskillsPlugin: Plugin = async () => {
+  return {
+    tool: {
+      autoskills: autoskillsTool,
+    },
+  };
+};
+
+export default OpencodeAutoskillsPlugin;

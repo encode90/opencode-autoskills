@@ -44,32 +44,32 @@ describe("setup CLI", () => {
   it("creates global command file by default", async () => {
     await setup();
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/home/user/.config/opencode/command"),
+      path.join("/home/user/.config/opencode/commands"),
       { recursive: true }
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
-      path.join("/home/user/.config/opencode/command/autoskills.md"),
+      path.join("/home/user/.config/opencode/commands/autoskills.md"),
       expect.stringContaining("autoskills"),
       "utf-8"
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Created: ${path.join("/home/user/.config/opencode/command/autoskills.md")}`
+      `Created: ${path.join("/home/user/.config/opencode/commands/autoskills.md")}`
     );
   });
 
   it("creates local command file with --local", async () => {
     await setup({ local: true });
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/command"),
+      path.join("/projects/my-app/.opencode/commands"),
       { recursive: true }
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/command/autoskills.md"),
+      path.join("/projects/my-app/.opencode/commands/autoskills.md"),
       expect.stringContaining("autoskills"),
       "utf-8"
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Created: ${path.join("/projects/my-app/.opencode/command/autoskills.md")}`
+      `Created: ${path.join("/projects/my-app/.opencode/commands/autoskills.md")}`
     );
   });
 
@@ -85,14 +85,15 @@ describe("setup CLI", () => {
     const expectedContent = `---
 description: Detect and install AI skills for this project
 ---
-When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
+Run \`npx autoskills\` in the current project directory using the bash tool.
+
+Do not inspect project files yourself. Do not parse or summarize project files. Let autoskills handle technology detection, interactive skill selection, and installation. After it finishes, briefly tell the user that installed skills are available from \`.agents/skills/\`, which OpenCode discovers automatically.`;
     vi.mocked(fs.existsSync).mockImplementation((p) => {
       return typeof p === "string" && p.endsWith("autoskills.md");
     });
     vi.mocked(fs.readFileSync).mockReturnValue(expectedContent);
 
     await setup();
-    expect(fs.writeFileSync).not.toHaveBeenCalled();
     expect(consoleLogSpy).toHaveBeenCalledWith(
       expect.stringContaining("Skipped")
     );
@@ -217,7 +218,7 @@ describe("main CLI", () => {
     process.argv = ["node", "cli.js", "setup", "--local"];
     await main();
     expect(fs.mkdirSync).toHaveBeenCalledWith(
-      path.join("/projects/my-app/.opencode/command"),
+      path.join("/projects/my-app/.opencode/commands"),
       { recursive: true }
     );
     expect(process.exitCode).toBeUndefined();

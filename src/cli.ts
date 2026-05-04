@@ -3,16 +3,19 @@ import * as os from "node:os";
 import * as path from "node:path";
 import { checkNodeVersion } from "./version.js";
 
+const PLUGIN_NAME = "opencode-autoskills";
 const COMMAND_FILE_CONTENT = `---
 description: Detect and install AI skills for this project
 ---
-When the user types \`/autoskills\`, invoke the \`autoskills\` custom tool.`;
+Run \`npx autoskills\` in the current project directory using the bash tool.
+
+Do not inspect project files yourself. Do not parse or summarize project files. Let autoskills handle technology detection, interactive skill selection, and installation. After it finishes, briefly tell the user that installed skills are available from \`.agents/skills/\`, which OpenCode discovers automatically.`;
 
 export function resolveTargetPath(local: boolean, filename = "autoskills.md"): { base: string; target: string } {
   const home = os.homedir();
   const base = local
-    ? path.resolve(process.cwd(), ".opencode", "command")
-    : path.resolve(home, ".config", "opencode", "command");
+    ? path.resolve(process.cwd(), ".opencode", "commands")
+    : path.resolve(home, ".config", "opencode", "commands");
 
   const target = path.resolve(base, filename);
 
@@ -25,6 +28,61 @@ export function resolveTargetPath(local: boolean, filename = "autoskills.md"): {
   }
 
   return { base, target };
+}
+
+export function resolveConfigPath(local: boolean): { base: string; target: string } {
+  const home = os.homedir();
+  const target = local
+    ? path.resolve(process.cwd(), "opencode.json")
+    : path.resolve(home, ".config", "opencode", "opencode.json");
+  const base = path.dirname(target);
+  return { base, target };
+}
+
+type JsonObject = Record<string, unknown>;
+
+function hasPlugin(config: JsonObject): boolean {
+  const plugin = config.plugin;
+  if (!Array.isArray(plugin)) return false;
+  return plugin.some((entry) => {
+    if (entry === PLUGIN_NAME) return true;
+    if (Array.isArray(entry) && entry[0] === PLUGIN_NAME) return true;
+    return false;
+  });
+}
+
+export function upsertPluginConfig(local: boolean): "created" | "updated" | "skipped" | "manual" {
+  const { base, target } = resolveConfigPath(local);
+
+  if (!fs.existsSync(base)) {
+    fs.mkdirSync(base, { recursive: true });
+  }
+
+  if (!fs.existsSync(target)) {
+    const config = {
+      $schema: "https://opencode.ai/config.json",
+      plugin: [PLUGIN_NAME],
+    };
+    fs.writeFileSync(target, JSON.stringify(config, null, 2) + "\n", "utf-8");
+    return "created";
+  }
+
+  let config: JsonObject;
+  try {
+    config = JSON.parse(fs.readFileSync(target, "utf-8")) as JsonObject;
+  } catch {
+    console.warn(
+      `Warning: could not parse ${target}. Add ${PLUGIN_NAME} manually to the \"plugin\" array.`
+    );
+    return "manual";
+  }
+
+  if (hasPlugin(config)) return "skipped";
+
+  const plugin = Array.isArray(config.plugin) ? config.plugin : [];
+  config.plugin = [...plugin, PLUGIN_NAME];
+  fs.writeFileSync(target, JSON.stringify(config, null, 2) + "\n", "utf-8");
+  return "updated";
 }
 
 export async function setup(args: { local?: boolean } = {}): Promise<void> {
@@ -43,16 +101,28 @@ export async function setup(args: { local?: boolean } = {}): Promise<void> {
       fs.mkdirSync(base, { recursive: true });
     }
 
+    let commandStatus: "created" | "updated" | "skipped" = "created";
     if (fs.existsSync(target)) {
       const existing = fs.readFileSync(target, "utf-8");
       if (existing === COMMAND_FILE_CONTENT) {
-        console.log(`Skipped: ${target} already exists with identical content.`);
-        return;
+        commandStatus = "skipped";
+      } else {
+        commandStatus = "updated";
       }
     }
 
-    fs.writeFileSync(target, COMMAND_FILE_CONTENT, "utf-8");
-    console.log(`Created: ${target}`);
+    if (commandStatus === "skipped") {
+      console.log(`Skipped: ${target} already exists with identical content.`);
+    } else {
+      fs.writeFileSync(target, COMMAND_FILE_CONTENT, "utf-8");
+      console.log(`${commandStatus === "created" ? "Created" : "Updated"}: ${target}`);
+    }
+
+    const configStatus = upsertPluginConfig(local);
+    if (configStatus !== "manual") {
+      const { target: configTarget } = resolveConfigPath(local);
+      console.log(`Plugin config ${configStatus}: ${configTarget}`);
+    }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`Error: failed to create ${target} — ${message}`);
