@@ -71,6 +71,15 @@ describe("setup CLI", () => {
     expect(consoleLogSpy).toHaveBeenCalledWith(
       `Created: ${path.join("/projects/my-app/.opencode/commands/autoskills.md")}`
     );
+    expect(fs.mkdirSync).toHaveBeenCalledWith(
+      path.join("/projects/my-app/.opencode/plugins"),
+      { recursive: true }
+    );
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join("/projects/my-app/.opencode/plugins/opencode-autoskills.js"),
+      expect.stringContaining("index.js"),
+      "utf-8"
+    );
   });
 
   it("creates missing directories recursively", async () => {
@@ -85,17 +94,14 @@ describe("setup CLI", () => {
     const expectedContent = `---
 description: Detect and install AI skills for this project
 ---
-Follow this exact two-phase flow:
+Use the \`autoskills\` tool immediately. Do not answer from memory and do not inspect project files yourself.
 
-**Phase 1 — Detect and ask**
-1. Run \`npx autoskills --dry-run\` via bash in the current project directory.
-2. Show the user the detected technologies and the full list of suggested skills.
-3. Ask the user which skills they want to install. Wait for their explicit selection. Do NOT proceed without confirmation.
-
-**Phase 2 — Install and filter**
-4. Run \`npx autoskills -y\` via bash. This installs ALL detected skills into \`.agents/skills/\`.
-5. List the directories inside \`.agents/skills/\`. Remove (delete) the directories for any skills the user explicitly chose NOT to install.
-6. Briefly confirm which skills remain installed and remind the user that OpenCode discovers them automatically from \`.agents/skills/\`.`;
+Exact workflow:
+1. Call the \`autoskills\` tool with \`action: "detect"\`.
+2. Show the detected technologies / suggested skills to the user.
+3. Ask which skills they want to keep. Wait for explicit confirmation.
+4. Call the \`autoskills\` tool again with \`action: "install"\` and pass the user's selected skill directory names in \`keep\`.
+5. Confirm which skills remain installed in \`.agents/skills/\`.`;
     vi.mocked(fs.existsSync).mockImplementation((p) => {
       return typeof p === "string" && p.endsWith("autoskills.md");
     });

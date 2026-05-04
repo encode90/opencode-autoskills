@@ -1,23 +1,32 @@
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { checkNodeVersion } from "./version.js";
 
 const PLUGIN_NAME = "opencode-autoskills";
 const COMMAND_FILE_CONTENT = `---
 description: Detect and install AI skills for this project
 ---
-Follow this exact two-phase flow:
+Use the \`autoskills\` tool immediately. Do not answer from memory and do not inspect project files yourself.
 
-**Phase 1 — Detect and ask**
-1. Run \`npx autoskills --dry-run\` via bash in the current project directory.
-2. Show the user the detected technologies and the full list of suggested skills.
-3. Ask the user which skills they want to install. Wait for their explicit selection. Do NOT proceed without confirmation.
+Exact workflow:
+1. Call the \`autoskills\` tool with \`action: "detect"\`.
+2. Show the detected technologies / suggested skills to the user.
+3. Ask which skills they want to keep. Wait for explicit confirmation.
+4. Call the \`autoskills\` tool again with \`action: "install"\` and pass the user's selected skill directory names in \`keep\`.
+5. Confirm which skills remain installed in \`.agents/skills/\`.`;
 
-**Phase 2 — Install and filter**
-4. Run \`npx autoskills -y\` via bash. This installs ALL detected skills into \`.agents/skills/\`.
-5. List the directories inside \`.agents/skills/\`. Remove (delete) the directories for any skills the user explicitly chose NOT to install.
-6. Briefly confirm which skills remain installed and remind the user that OpenCode discovers them automatically from \`.agents/skills/\`.`;
+function getLocalPluginContent() {
+  const packageIndexPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "index.js");
+  const packageIndexUrl = pathToFileURL(packageIndexPath).href;
+
+  return `import OpencodeAutoskillsPlugin from ${JSON.stringify(packageIndexUrl)};
+
+export { OpencodeAutoskillsPlugin };
+export default OpencodeAutoskillsPlugin;
+`;
+}
 
 export function resolveTargetPath(local: boolean, filename = "autoskills.md"): { base: string; target: string } {
   const home = os.homedir();
@@ -44,6 +53,12 @@ export function resolveConfigPath(local: boolean): { base: string; target: strin
     ? path.resolve(process.cwd(), "opencode.json")
     : path.resolve(home, ".config", "opencode", "opencode.json");
   const base = path.dirname(target);
+  return { base, target };
+}
+
+export function resolveLocalPluginPath(): { base: string; target: string } {
+  const base = path.resolve(process.cwd(), ".opencode", "plugins");
+  const target = path.resolve(base, `${PLUGIN_NAME}.js`);
   return { base, target };
 }
 
@@ -126,10 +141,31 @@ export async function setup(args: { local?: boolean } = {}): Promise<void> {
       console.log(`${commandStatus === "created" ? "Created" : "Updated"}: ${target}`);
     }
 
-    const configStatus = upsertPluginConfig(local);
-    if (configStatus !== "manual") {
-      const { target: configTarget } = resolveConfigPath(local);
-      console.log(`Plugin config ${configStatus}: ${configTarget}`);
+    if (local) {
+      const { base: pluginBase, target: pluginTarget } = resolveLocalPluginPath();
+      if (!fs.existsSync(pluginBase)) {
+        fs.mkdirSync(pluginBase, { recursive: true });
+      }
+
+      const pluginContent = getLocalPluginContent();
+      let pluginStatus: "created" | "updated" | "skipped" = "created";
+      if (fs.existsSync(pluginTarget)) {
+        const existingPlugin = fs.readFileSync(pluginTarget, "utf-8");
+        pluginStatus = existingPlugin === pluginContent ? "skipped" : "updated";
+      }
+
+      if (pluginStatus === "skipped") {
+        console.log(`Plugin wrapper skipped: ${pluginTarget} already exists with identical content.`);
+      } else {
+        fs.writeFileSync(pluginTarget, pluginContent, "utf-8");
+        console.log(`${pluginStatus === "created" ? "Plugin wrapper created" : "Plugin wrapper updated"}: ${pluginTarget}`);
+      }
+    } else {
+      const configStatus = upsertPluginConfig(local);
+      if (configStatus !== "manual") {
+        const { target: configTarget } = resolveConfigPath(local);
+        console.log(`Plugin config ${configStatus}: ${configTarget}`);
+      }
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
